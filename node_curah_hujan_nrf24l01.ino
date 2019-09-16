@@ -42,6 +42,7 @@ void setup(void)
 
   pinMode(BUCKET_PIN, INPUT);
   digitalWrite(BUCKET_PIN, HIGH);
+  attachInterrupt(digitalPinToInterrupt(BUCKET_PIN), ticking, CHANGE);
   
   SPI.begin();
   radio.begin();
@@ -53,7 +54,6 @@ void loop() {
   network.update();                          // Check the network regularly
   data="";
   unsigned long now = millis();              // If it's time to send a message, send it!
-  ticking();
   if ( now - last_sent >= interval  )
   {
     last_sent = now;
